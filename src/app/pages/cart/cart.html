@@ -1,0 +1,72 @@
+<div class="container py-5">
+  <h1 class="mb-4">Tu carrito de compras</h1>
+  
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="card-title">Productos</h2>
+          @if (cartItems().length ===0) {
+ <div  class="alert alert-info">
+            Tu carrito está vacío
+          </div>
+          }
+         
+         @for (item of cartItems(); track $index) {
+
+             <div class="cart-item mb-3">
+            <div class="row">
+              <div class="col-md-2">
+                <img [src]="item.product.image" alt="{{item.product.title}}" class="img-fluid">
+              </div>
+              <div class="col-md-6">
+                <h5>{{item.product.title}}</h5>
+                <p class="text-muted">{{item.product.description}}</p>
+              </div>
+              <div class="col-md-2">
+                <input type="number" class="form-control" 
+                       [value]="item.quantity" min="1"
+                       (change)="updateQuantity(item.product.id, $event)">
+              </div>
+              <div class="col-md-2 text-end">
+                <p class="price">${{(item.product.price * item.quantity) | number:'1.2-2'}}</p>
+                <button class="btn btn-danger btn-sm" 
+                        (click)="removeItem(item.product.id)">
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+         }
+         
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="card-title">Resumen</h2>
+          <div class="d-flex justify-content-between mb-3">
+            <span>Subtotal:</span>
+            <span>${{totalPrice() | number:'1.2-2'}}</span>
+          </div>
+          <div class="d-flex justify-content-between mb-3">
+            <span>Envío:</span>
+            <span>$0.00</span>
+          </div>
+          <hr>
+          <div class="d-flex justify-content-between mb-3">
+            <strong>Total:</strong>
+            <strong>${{totalPrice() | number:'1.2-2'}}</strong>
+          </div>
+          <button class="btn btn-primary w-100" 
+                  [disabled]="cartItems().length === 0"
+                  routerLink="/checkout">
+            Proceder al pago
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

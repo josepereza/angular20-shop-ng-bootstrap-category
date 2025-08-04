@@ -1,0 +1,160 @@
+<div class="container py-5">
+  <div class="row">
+    <div class="col-md-8">
+      <h1 class="mb-4">Finalizar Compra</h1>
+
+      <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h2 class="card-title mb-4">Información de Envío</h2>
+
+            <div class="mb-3">
+              <label for="name" class="form-label">Nombre completo</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                formControlName="name"
+              />
+
+              @if (checkoutForm.get('name')?.invalid && checkoutForm.get('name')?.touched) {
+              <div  class="text-danger">
+                    Por favor ingresa tu nombre
+
+             </div>     
+                 
+                
+              }
+             
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                formControlName="email" />
+              @if (checkoutForm.get('email')?.invalid && checkoutForm.get('email')?.touched) {
+
+              <div class="text-danger" >
+                Por favor ingresa un email válido
+              </div>
+              }
+             
+            </div>
+
+            <div class="mb-3">
+              <label for="address" class="form-label">Dirección</label>
+              <textarea
+                class="form-control"
+                id="address"
+                rows="3"
+                formControlName="address">
+              </textarea>
+              @if (checkoutForm.get('address')?.invalid && checkoutForm.get('address')?.touched) {
+
+            <div class="text-danger">
+                            Por favor ingresa tu dirección
+                        </div>
+              }
+              
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h2 class="card-title mb-4">Método de Pago</h2>
+
+            <div class="form-check mb-3">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="paymentMethod"
+                id="credit-card"
+                value="credit-card"
+                formControlName="paymentMethod"
+                checked
+              />
+              <label class="form-check-label" for="credit-card">
+                Tarjeta de Crédito
+              </label>
+            </div>
+
+            <div class="form-check mb-3">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="paymentMethod"
+                id="paypal"
+                value="paypal"
+                formControlName="paymentMethod"
+              />
+              <label class="form-check-label" for="paypal"> PayPal </label>
+            </div>
+
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="paymentMethod"
+                id="bank-transfer"
+                value="bank-transfer"
+                formControlName="paymentMethod"
+              />
+              <label class="form-check-label" for="bank-transfer">
+                Transferencia Bancaria
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary btn-lg w-100"
+          [disabled]="checkoutForm.invalid || cartItems().length === 0"
+        >
+          Confirmar Pedido
+        </button>
+      </form>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Resumen del Pedido</h2>
+
+          <ul class="list-group list-group-flush mb-3">
+            @for (item of cartItems(); track $index) {
+            <li class="list-group-item d-flex justify-content-between">
+              <span>{{ item.product.title }} (x{{ item.quantity }})</span>
+              <span
+                >${{ (item.product.price * item.quantity) | number:'1.2-2'
+                }}</span
+              >
+            </li>
+            }
+          </ul>
+
+          <div class="d-flex justify-content-between mb-2">
+            <strong>Subtotal:</strong>
+            <span>${{ totalPrice() | number:'1.2-2' }}</span>
+          </div>
+
+          <div class="d-flex justify-content-between mb-2">
+            <strong>Envío:</strong>
+            <span>$0.00</span>
+          </div>
+
+          <hr />
+
+          <div class="d-flex justify-content-between">
+            <strong>Total:</strong>
+            <strong>${{ totalPrice() | number:'1.2-2' }}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

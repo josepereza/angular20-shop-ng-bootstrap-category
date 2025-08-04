@@ -1,0 +1,19 @@
+ <div class="category-filter mb-4">
+      <button 
+        class="btn btn-outline-primary me-2 mb-2"
+        [class.active]="!productService.selectedCategory()"
+        (click)="productService.setCategory(null)">
+        All
+      </button>
+      @for ( category of productService.categories(); track $index) {
+<button 
+        
+        class="btn btn-outline-primary me-2 mb-2"
+        [class.active]="productService.selectedCategory() === category"
+        (click)="productService.setCategory(category)">
+        {{ category | titlecase }}
+      </button>
+
+      }
+      
+    </div>

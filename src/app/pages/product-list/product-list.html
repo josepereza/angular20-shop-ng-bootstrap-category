@@ -1,0 +1,16 @@
+<br><br><br><br>
+    <app-category-filter></app-category-filter>
+
+ @if (productService.filteredProducts().length > 0) {
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        @for (product of productService.filteredProducts(); track product.id) {
+          <div class="col">
+            <app-product-card [product]="product"></app-product-card>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="alert alert-info mt-3">
+        No products found in this category
+      </div>
+    }

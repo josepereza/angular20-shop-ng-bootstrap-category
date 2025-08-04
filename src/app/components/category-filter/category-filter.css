@@ -1,0 +1,9 @@
+.btn.active {
+      background-color: #0d6efd;
+      color: white;
+    }
+    .category-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
