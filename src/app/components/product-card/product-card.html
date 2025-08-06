@@ -1,5 +1,5 @@
 <div class="card product-card h-100">
-  <img [src]="product.image" class="card-img-top product-image" [alt]="product.title">
+  <img [ngSrc]="product.image" width="300" height="300"  style="object-fit:cover;" class="card-img-top product-image" [alt]="product.title">
   <div class="card-body">
     <h5 class="card-title">{{ product.title }}</h5>
     <p class="card-text">{{ product.description }}</p>
